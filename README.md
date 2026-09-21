@@ -114,7 +114,11 @@ cp -r jev-architect/claude/skills/jev-architect ~/.claude/skills/
 ```
 
 For a single project instead, copy it to `.claude/skills/` at the repository root. Restart
-Claude Code, then check with `/skills` that `jev-architect` is listed.
+Claude Code so the skill is picked up, then confirm the file landed:
+
+```bash
+ls ~/.claude/skills/jev-architect/SKILL.md
+```
 
 ### Codex
 
