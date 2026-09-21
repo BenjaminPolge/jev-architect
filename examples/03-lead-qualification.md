@@ -26,33 +26,33 @@ scope. This distinction is the one most often got wrong.
 ## Expected output
 
 ```
-**Architecture proposée**
+**Proposed architecture**
 
-- Score de fit ICP → Jev (`score`, 5 niveaux)
+- ICP fit score → Jev (`score`, 5 levels)
 - Segment → Jev (`choice`)
-- Budget évoqué / décideur atteint → Jev (`noul` ×2)
-- Extraction du montant → parsing ou LLM (valeur libre, hors périmètre Jev)
-- Rédaction de l'email → LLM
+- Budget mentioned / decision-maker reached → Jev (`noul` ×2)
+- Extracting the amount → parser or LLM (free-form value, outside Jev's scope)
+- Email drafting → LLM
 
-| Critère | Jev | LLM |
+| Criterion | Jev | LLM |
 |---|---|---|
-| Adéquation fonctionnelle | ✔ sur les 4 décisions fermées | ✔ sur la rédaction |
-| Coût | ✔ qualification à bas coût | ~ acceptable, volume d'emails plus faible |
-| Latence | ✔ qualification quasi instantanée | ~ rédaction hors chemin critique |
-| Volume | ✔ toute la base qualifiée en lot | ✘ à ce volume |
-| Déterminisme / sortie typée | ✔ score et segment directement stockables en CRM | ✘ |
-| Génération libre | ✘ | ✔ indispensable |
-| Raisonnement multi-étapes | ✘ | ✔ |
-| Complexité d'intégration | ~ un provider de plus | ✔ déjà en place |
+| Functional fit | ✔ on the 4 closed decisions | ✔ on the drafting |
+| Cost | ✔ cheap qualification | ~ acceptable, email volume is lower |
+| Latency | ✔ near-instant qualification | ~ drafting is off the critical path |
+| Volume | ✔ whole base re-qualified in batch | ✘ at that volume |
+| Determinism / typed output | ✔ score and segment stored straight into the CRM | ✘ |
+| Free generation | ✘ | ✔ indispensable |
+| Multi-step reasoning | ✘ | ✔ |
+| Integration cost | ~ one more provider | ✔ already wired in |
 
-**Pourquoi** : les quatre décisions sont fermées et partagent le même état (une seule requête) ;
-la base entière peut être requalifiée en lot sans exploser le budget ; le CRM reçoit des valeurs
-typées plutôt que du JSON à valider.
+**Why**: the four decisions are closed and share the same state (one request); the whole base
+can be re-qualified in batch without blowing the budget; the CRM receives typed values instead
+of JSON to validate.
 
-**Limite** : le montant du budget est une valeur libre — Jev ne peut pas la produire. Elle
-reste au parsing ou au LLM.
+**Limit**: the budget amount is a free-form value — Jev cannot produce it. It stays with a
+parser or the LLM.
 
-Je pars là-dessus ?
+Shall I build it this way?
 ```
 
 ## The point

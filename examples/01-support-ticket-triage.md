@@ -23,32 +23,32 @@ gate passes. The three questions target the same state, so they travel in one re
 ## Expected output
 
 ```
-**Architecture proposée**
+**Proposed architecture**
 
-- Déduplication → code classique (hash + lookup)
-- Routage équipe → Jev (`choice`)
-- Urgence → Jev (`score`, 4 niveaux)
-- Demande de remboursement → Jev (`noul`)
-- Rédaction de la première réponse → LLM
+- Deduplication → plain code (hash + lookup)
+- Team routing → Jev (`choice`)
+- Urgency → Jev (`score`, 4 levels)
+- Refund requested → Jev (`noul`)
+- First reply drafting → LLM
 
-| Critère | Jev | LLM |
+| Criterion | Jev | LLM |
 |---|---|---|
-| Adéquation fonctionnelle | ✔ sorties fermées (équipe, niveau, oui/non) | ~ capable, mais surdimensionné |
-| Coût | ✔ tokens d'entrée seuls, ordre de grandeur inférieur | ✘ 50k tickets/jour × 3 décisions |
-| Latence | ✔ une centaine de ms, 3 questions en un appel | ✘ 1–3 s par appel |
-| Volume | ✔ 50k/jour, dans la cible | ✘ coût linéaire |
-| Déterminisme / sortie typée | ✔ valeur contrainte, aucun parsing | ✘ JSON à parser et à valider |
-| Génération libre | ✘ impossible | ✔ nécessaire pour la réponse |
-| Raisonnement multi-étapes | ✘ | ✔ |
-| Complexité d'intégration | ~ un provider et une clé de plus | ✔ déjà en place |
+| Functional fit | ✔ closed outputs (team, level, yes/no) | ~ capable, but oversized |
+| Cost | ✔ input tokens only, an order of magnitude lower | ✘ 50k tickets/day × 3 decisions |
+| Latency | ✔ low hundreds of ms, 3 questions in one call | ✘ 1–3 s per call |
+| Volume | ✔ 50k/day, squarely in range | ✘ cost scales linearly |
+| Determinism / typed output | ✔ constrained value, no parsing | ✘ JSON to parse and validate |
+| Free generation | ✘ impossible | ✔ required for the reply |
+| Multi-step reasoning | ✘ | ✔ |
+| Integration cost | ~ one more provider and key | ✔ already wired in |
 
-**Pourquoi** : les trois décisions ont des sorties fermées et partagent le même état, donc un
-seul appel ; le volume rend le coût du tri significatif ; le routage est sur le chemin critique.
+**Why**: the three decisions have closed outputs and share the same state, so they travel in a
+single call; the volume makes triage cost material; routing sits on the critical path.
 
-**Limite** : la rédaction de la réponse reste sur le LLM, et il faut un fallback si Jev répond
-avec une confiance faible — dans ce cas, router vers une file de triage humain.
+**Limit**: reply drafting stays on the LLM, and low-confidence answers need a fallback — route
+those to a human triage queue.
 
-Je pars sur cette architecture, ou on garde tout sur le LLM ?
+This architecture, or keep everything on the LLM?
 ```
 
 ## The point

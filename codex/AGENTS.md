@@ -53,31 +53,32 @@ before the developer agrees.
 One compact block, then stop and wait for an answer:
 
 ```
-Architecture proposée
-- Étape A → Jev (choice)
-- Étape B → LLM
-- Étape C → code classique
+Proposed architecture
+- Step A → Jev (choice)
+- Step B → LLM
+- Step C → plain code
 
-| Critère | Jev | LLM |
+| Criterion | Jev | LLM |
 |---|---|---|
-| Adéquation fonctionnelle | … | … |
-| Coût | … | … |
-| Latence | … | … |
+| Functional fit | … | … |
+| Cost | … | … |
+| Latency | … | … |
 | Volume | … | … |
-| Déterminisme / sortie typée | … | … |
-| Génération libre | … | … |
-| Raisonnement multi-étapes | … | … |
-| Complexité d'intégration | … | … |
+| Determinism / typed output | … | … |
+| Free generation | … | … |
+| Multi-step reasoning | … | … |
+| Integration cost | … | … |
 
-Pourquoi : <2 à 4 raisons ancrées dans ce projet>
-Limite : <ce que Jev ne couvre pas ici>
+Why: <2 to 4 reasons grounded in this project>
+Limit: <what Jev does not cover here>
 
-Je pars là-dessus, ou on garde tout sur le LLM ?
+This architecture, or keep everything on the LLM?
 ```
 
-Fill the table with what is true for this project; write "à confirmer" rather than inventing a
-figure. Keep the LLM column honest — it wins on generation, on reasoning, and usually on
-integration cost when it is already wired in. Answer in the developer's language.
+The template is a shape, not a script — write it in the developer's language. Fill the table
+with what is true for this project; write "to confirm" rather than inventing a figure. Keep the
+LLM column honest — it wins on generation, on reasoning, and usually on integration cost when
+it is already wired in.
 
 ## If the developer agrees
 

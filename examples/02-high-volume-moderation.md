@@ -21,32 +21,33 @@ budget, and the check sits in the publish path, so latency is user-visible.
 ## Expected output
 
 ```
-**Architecture proposée**
+**Proposed architecture**
 
-- Filtre signatures connues → code classique
-- Abus oui/non → Jev (`noul`)
-- Gravité → Jev (`score`)
-- Catégorie de violation → Jev (`choice`)
-- Explication à l'utilisateur → LLM, uniquement sur contestation
+- Known-signature spam filter → plain code
+- Abusive yes/no → Jev (`noul`)
+- Severity → Jev (`score`)
+- Violation category → Jev (`choice`)
+- Explanation to the user → LLM, on appeal only
 
-| Critère | Jev | LLM |
+| Criterion | Jev | LLM |
 |---|---|---|
-| Adéquation fonctionnelle | ✔ décision binaire + gravité + catégorie | ~ |
-| Coût | ✔ facturation à l'entrée uniquement | ✘ 2M appels/jour, prohibitif |
-| Latence | ✔ compatible avec le chemin de publication | ✘ 1–3 s visibles à la publication |
-| Volume | ✔ régime cible | ✘ |
-| Déterminisme / sortie typée | ✔ seuil directement exploitable | ✘ |
-| Génération libre | ✘ | ✔ nécessaire pour l'explication |
-| Raisonnement multi-étapes | ✘ | ✔ |
-| Complexité d'intégration | ~ un provider de plus | ✔ déjà en place |
+| Functional fit | ✔ binary decision + severity + category | ~ |
+| Cost | ✔ input tokens only | ✘ 2M calls/day, prohibitive |
+| Latency | ✔ fits inside the publish path | ✘ 1–3 s, visible on publish |
+| Volume | ✔ target regime | ✘ |
+| Determinism / typed output | ✔ threshold directly usable | ✘ |
+| Free generation | ✘ | ✔ required for the explanation |
+| Multi-step reasoning | ✘ | ✔ |
+| Integration cost | ~ one more provider | ✔ already wired in |
 
-**Pourquoi** : volume de 2M/jour, décision binaire à seuil, sortie typée exploitable
-directement, et la latence est visible par l'utilisateur au moment de publier.
+**Why**: 2M decisions a day, a binary call with a threshold, a typed output usable as-is, and
+latency the user feels at the moment they hit publish.
 
-**Limite** : la bande d'incertitude autour du seuil doit partir en revue — humaine, ou LLM si
-le volume concerné reste faible. Sans ce garde-fou, le gain de coût se paie en faux positifs.
+**Limit**: the uncertainty band around the threshold has to go somewhere — human review, or an
+LLM if that slice stays small. Without that escape hatch, the cost saving is paid in false
+positives.
 
-Je pars là-dessus, ou on garde tout sur le LLM ?
+This architecture, or keep everything on the LLM?
 ```
 
 ## The point

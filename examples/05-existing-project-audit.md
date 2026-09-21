@@ -30,35 +30,35 @@ out of free text with a failure rate, and the call runs 40k times a day.
 ## Expected output
 
 ```
-**Opportunité détectée** — `api/documents/classify.py:42`
+**Opportunity found** — `api/documents/classify.py:42`
 
-Cet appel produit trois valeurs fermées (catégorie parmi 4, priorité 1–5, booléen) mais passe
-par un modèle génératif, avec un `json.loads` qui échoue environ 1 % du temps.
+This call produces three closed values (one category out of 4, a 1–5 priority, a boolean) but
+goes through a generative model, with a `json.loads` that fails roughly 1% of the time.
 
-- Catégorie → Jev (`choice`)
-- Priorité → Jev (`score`)
-- Revue nécessaire → Jev (`noul`)
+- Category → Jev (`choice`)
+- Priority → Jev (`score`)
+- Needs review → Jev (`noul`)
 
-Les trois questions portent sur le même état : un seul appel.
+All three questions are about the same state: one call.
 
-| Critère | Jev | LLM (actuel) |
+| Criterion | Jev | LLM (current) |
 |---|---|---|
-| Adéquation fonctionnelle | ✔ sorties fermées | ~ fonctionne, format non garanti |
-| Coût | ✔ facturation entrée seule | ✘ poste principal de la facture |
-| Latence | ✔ ~100 ms | ✘ 1–3 s |
-| Volume | ✔ 40k/jour | ✘ |
-| Déterminisme / sortie typée | ✔ plus de `json.loads`, plus d'échec de parsing | ✘ ~1 % d'échecs |
-| Génération libre | ✘ non nécessaire ici | ✔ inutilisé |
-| Raisonnement multi-étapes | ✘ non nécessaire ici | ✔ inutilisé |
-| Complexité d'intégration | ~ nouveau provider + clé + fallback | ✔ déjà en place |
+| Functional fit | ✔ closed outputs | ~ works, format not guaranteed |
+| Cost | ✔ input tokens only | ✘ the main line on the bill |
+| Latency | ✔ ~100 ms | ✘ 1–3 s |
+| Volume | ✔ 40k/day | ✘ |
+| Determinism / typed output | ✔ no `json.loads`, no parse failures | ✘ ~1% failures |
+| Free generation | ✘ not needed here | ✔ unused |
+| Multi-step reasoning | ✘ not needed here | ✔ unused |
+| Integration cost | ~ new provider + key + fallback | ✔ already wired in |
 
-**Pourquoi** : aucune des trois sorties n'a besoin de génération ; le parsing JSON est une source
-d'erreurs qui disparaît avec une réponse typée ; 40k appels/jour rendent l'écart de coût réel.
+**Why**: none of the three outputs needs generation; the JSON parsing is a source of errors
+that disappears with a typed response; 40k calls a day make the cost gap real.
 
-**Limite** : c'est une migration, pas un simple remplacement — il faut rejouer un échantillon
-d'historique pour comparer les décisions avant de basculer, et garder le chemin LLM en fallback.
+**Limit**: this is a migration, not a drop-in swap — replay a sample of history and compare
+decisions before cutting over, and keep the LLM path as a fallback.
 
-Je prépare la migration de ce call site, ou tu veux d'abord le comparatif sur un échantillon ?
+Shall I prepare the migration for this call site, or do you want the sample comparison first?
 ```
 
 ## The point

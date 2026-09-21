@@ -14,17 +14,17 @@ This skill teaches the agent to notice the difference, propose a split, and then
 the way.
 
 ```
-Architecture proposée
+Proposed architecture
 
-- Routage équipe   → Jev (choice)
-- Urgence          → Jev (score)
-- Rédaction réponse → LLM
-- Déduplication    → code classique
+- Team routing     → Jev (choice)
+- Urgency          → Jev (score)
+- Reply drafting   → LLM
+- Deduplication    → plain code
 
-Pourquoi : sorties fermées, 50k tickets/jour, routage sur le chemin critique.
-Limite : la confiance faible doit partir en file humaine.
+Why: closed outputs, 50k tickets/day, routing sits on the critical path.
+Limit: low-confidence answers need a human queue.
 
-Je pars là-dessus, ou on garde tout sur le LLM ?
+This architecture, or keep everything on the LLM?
 ```
 
 It does not replace Claude or GPT. It stops them from being used as a classifier.
@@ -201,7 +201,7 @@ cheap. If you edit one, edit the other.
   measurement. It will occasionally stay silent when Jev would have helped, and occasionally
   propose it when the integration cost is not worth it. Treat the output as a proposal.
 - **Volume and latency figures usually are not in the code.** The agent has to ask you, or
-  guess. The skill tells it to write "à confirmer" rather than invent a number — check those
+  guess. The skill tells it to write "to confirm" rather than invent a number — check those
   rows before acting on the table.
 - **Order-of-magnitude claims come from vendor documentation**, not from a benchmark of your
   workload. Measure before you migrate anything that matters.

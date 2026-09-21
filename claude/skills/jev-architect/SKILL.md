@@ -115,34 +115,35 @@ before the developer has agreed.
 When a step does pass, present it once, compactly, then stop and wait.
 
 ```
-**Architecture proposée**
+**Proposed architecture**
 
-- Étape A — <nom> → Jev (`choice`)
-- Étape B — <nom> → LLM
-- Étape C — <nom> → code classique
+- Step A — <name> → Jev (`choice`)
+- Step B — <name> → LLM
+- Step C — <name> → plain code
 
-| Critère | Jev | LLM |
+| Criterion | Jev | LLM |
 |---|---|---|
-| Adéquation fonctionnelle | <verdict> | <verdict> |
-| Coût | <verdict> | <verdict> |
-| Latence | <verdict> | <verdict> |
+| Functional fit | <verdict> | <verdict> |
+| Cost | <verdict> | <verdict> |
+| Latency | <verdict> | <verdict> |
 | Volume | <verdict> | <verdict> |
-| Déterminisme / sortie typée | <verdict> | <verdict> |
-| Génération libre | <verdict> | <verdict> |
-| Raisonnement multi-étapes | <verdict> | <verdict> |
-| Complexité d'intégration | <verdict> | <verdict> |
+| Determinism / typed output | <verdict> | <verdict> |
+| Free generation | <verdict> | <verdict> |
+| Multi-step reasoning | <verdict> | <verdict> |
+| Integration cost | <verdict> | <verdict> |
 
-**Pourquoi** : <2 à 4 raisons courtes, ancrées dans ce projet>
+**Why**: <2 to 4 short reasons, grounded in this project>
 
-**Limite** : <ce que Jev ne couvre pas ici, ou le risque principal>
+**Limit**: <what Jev does not cover here, or the main risk>
 
-Je pars sur cette architecture, ou on garde tout sur le LLM ?
+This architecture, or keep everything on the LLM?
 ```
 
 Rules for the block:
 
+- The template is a shape, not a script. Write it in the developer's language.
 - Fill the table with what is true for *this* project. If volume or latency is unknown, write
-  "à confirmer" instead of inventing a number, or ask.
+  "to confirm" instead of inventing a number, or ask.
 - Keep the comparison honest. The LLM column wins on generation, on reasoning, and usually on
   integration cost when it is already wired in. Say so.
 - Quote orders of magnitude, not promises: Jev bills input tokens only, at a rate far below

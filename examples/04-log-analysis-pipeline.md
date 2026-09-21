@@ -22,34 +22,33 @@ a day collapse into a few thousand distinct signatures; only those need judgemen
 ## Expected output
 
 ```
-**Architecture proposée**
+**Proposed architecture**
 
-- Parsing et normalisation → code classique
-- Regroupement en signatures (10M lignes → ~2k clusters) → code classique
-- Actionnable oui/non → Jev (`noul`)
-- Gravité → Jev (`score`)
-- Composant concerné → Jev (`choice`)
-- Synthèse d'incident → LLM, sur les clusters prioritaires uniquement
+- Parsing and normalization → plain code
+- Grouping into signatures (10M lines → ~2k clusters) → plain code
+- Actionable yes/no → Jev (`noul`)
+- Severity → Jev (`score`)
+- Component affected → Jev (`choice`)
+- Incident write-up → LLM, on the top clusters only
 
-| Critère | Jev | LLM |
+| Criterion | Jev | LLM |
 |---|---|---|
-| Adéquation fonctionnelle | ✔ trois sorties fermées par signature | ~ |
-| Coût | ✔ ~2k évaluations/jour, négligeable | ✘ si appliqué aux lignes brutes |
-| Latence | ✔ compatible avec un passage temps quasi réel | ~ acceptable en batch |
-| Volume | ✔ après regroupement | ✘ avant regroupement |
-| Déterminisme / sortie typée | ✔ gravité exploitable pour l'alerting | ✘ |
-| Génération libre | ✘ | ✔ nécessaire pour la synthèse |
-| Raisonnement multi-étapes | ✘ | ✔ corrélation entre incidents |
-| Complexité d'intégration | ~ un provider de plus | ✔ déjà en place |
+| Functional fit | ✔ three closed outputs per signature | ~ |
+| Cost | ✔ ~2k evaluations/day, negligible | ✘ if applied to raw lines |
+| Latency | ✔ fits a near-real-time pass | ~ acceptable in batch |
+| Volume | ✔ after grouping | ✘ before grouping |
+| Determinism / typed output | ✔ severity usable for alerting | ✘ |
+| Free generation | ✘ | ✔ required for the write-up |
+| Multi-step reasoning | ✘ | ✔ correlating incidents |
+| Integration cost | ~ one more provider | ✔ already wired in |
 
-**Pourquoi** : l'essentiel du volume ne doit toucher aucun modèle — le regroupement fait le gros
-du travail. Sur les ~2k signatures restantes, les trois questions sont fermées et tiennent dans
-un seul appel par signature.
+**Why**: most of the volume should touch no model at all — grouping does the heavy lifting. On
+the ~2k remaining signatures, the three questions are closed and fit in one call per signature.
 
-**Limite** : la corrélation entre incidents (« ces trois signatures sont le même problème »)
-demande du raisonnement et reste sur le LLM.
+**Limit**: correlating incidents ("these three signatures are the same problem") takes
+reasoning and stays on the LLM.
 
-Je pars là-dessus ?
+Shall I build it this way?
 ```
 
 ## The point
